@@ -23,9 +23,9 @@ pipeline {
         stage('Compile') {
             agent {
                 // Використання Docker образу з підтримкою Go версії 1.21.3. Обовʼязково необхідно використати параметр `reuseNode true` для Docker агента для роботи в плейграунді
-                docker { 
-                image 'golang:1.21.3' 
-                reuseNode: true 
+                docker {
+                    image 'golang:1.21.3' 
+                    euseNode: true 
                 }
             }
             steps {
