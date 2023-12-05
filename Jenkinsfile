@@ -23,7 +23,10 @@ pipeline {
         stage('Compile') {
             agent {
                 // Використання Docker образу з підтримкою Go версії 1.21.3. Обовʼязково необхідно використати параметр `reuseNode true` для Docker агента для роботи в плейграунді
-                docker { image 'golang:1.21.3', reuseNode: true }
+                docker { 
+                image 'golang:1.21.3' 
+                reuseNode: true 
+                }
             }
             steps {
                 // Компіляція проекту на мові Go. Всі ці флаги необхідні для запуску на пустій файловій системі образу scratch :)
@@ -34,7 +37,10 @@ pipeline {
         stage('Unit Testing') {
             agent {
                 // Використання Docker образу з підтримкою Go версії 1.21.3. Обовʼязково необхідно використати параметр `reuseNode true` для Docker агента для роботи в плейграунді
-                docker { image 'golang:1.21.3', reuseNode: true }
+                docker { 
+                    image 'golang:1.21.3'
+                    reuseNode: true 
+                }
             }
             steps {
                 // Виконання юніт-тестів. Команду можна знайти в Google
@@ -54,7 +60,7 @@ pipeline {
                 stage('Build Docker Image') {
                     steps {
                         // Створення Docker образу з імʼям DOCKER_IMAGE_NAME і тегом BUILD_NUMBER та передача аргументу APP_NAME за допомогою флагу `--build-arg`
-                        docker.build("${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}", "--build-arg APP_NAME=${APP_NAME} .")
+                         sh "docker build --build-arg APP_NAME=${APP_NAME} -t ${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER} ."
                     }
                 }
             }
