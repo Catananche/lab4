@@ -53,7 +53,8 @@ pipeline {
                 stage('Archive Artifact') {
                     steps {
                         // Створення TAR-архіву артефакту з використанням імені додатку APP_NAME та номеру сборки BUILD_NUMBER
-                        sh "tar -czf ${APP_NAME}-${BUILD_NUMBER}.tar.gz ${APP_NAME}"
+                        sh "tar -czvf ${APP_NAME}_${env.BUILD_NUMBER}.tar.gz ${APP_NAME}"
+                        archiveArtifacts artifacts: "${APP_NAME}_${env.BUILD_NUMBER}.tar.gz", fingerprint: true
                     }
                 }
 
