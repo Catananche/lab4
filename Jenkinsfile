@@ -45,7 +45,6 @@ pipeline {
                 stage('Archive Artifact') {
                     steps {
                         sh "tar -czvf ${APP_NAME}_${env.BUILD_NUMBER}.tar.gz ${APP_NAME}"
-                        archiveArtifacts artifacts: "${APP_NAME}_${env.BUILD_NUMBER}.tar.gz", fingerprint: true
                     }
                 }
 
@@ -60,7 +59,7 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts artifacts: "${APP_NAME}_${env.BUILD_NUMBER}.tar.gz", fingerprint: true
+            archiveArtifacts artifacts: "${APP_NAME}_${env.BUILD_NUMBER}.tar.gz", onlyIfSuccessful: true
         }
         always {
             echo 'Pipeline finished'
